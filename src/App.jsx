@@ -1,24 +1,34 @@
+/* 
+ * Version: 2.5.0 - Judith Designs Custom Style Premium 
+ * Autor: DevMaster Architect
+ * Ecosistema de colores: 
+ *   - Rosa Pastel: #FCDCE7
+ *   - Fucsia Vibrante: #F42B88
+ *   - Morado Elegante: #7A4A87
+ */
+
 import React, { useState } from 'react';
 
 const TRANSLATIONS = {
   es: {
     tagline1: "Moldes Limpios y Shakers 3D listos para cortar (SVG & Studio)",
     tagline2: "Papeles Digitales y Diseños Personalizados de Alta Resolución",
-    headerSub: "🎨 Cake Toppers 3D • ✂️ Plantillas de Cajitas",
-    bio: "Diseños digitales y shakers únicos para tus mejores celebraciones. ¡Listos para descargar y ensamblar!",
+    headerSub: "🎨 DECORACIÓN PERSONALIZADA PARA FIESTAS 🎈",
+    bio: "🎁 Diseños de plantilla fáciles de ensamblar",
+    bio2: "✨ Celebra con estilo con nuestros productos únicos para tus celebraciones ✨",
     tutorialTitle: "¿No sabes cómo armar los moldes?",
     tutorialDesc: "Mira mis videos rápidos de armado en TikTok",
     tutorialBtn: "Ver Reels",
     selectShop: "Selecciona una de mis tiendas en Etsy",
-    tabShop1: "✂️ Blank Templates",
-    tabShop2: "🎨 Custom Party Decor",
+    tabShop1: "✂️ Plantillas en Blanco",
+    tabShop2: "🎨 Decoración personalizada para fiestas",
     couponTitle: "Cupón de Bienvenida",
     couponOffer: "Consigue un {discount} en tu orden",
     couponCopy: "Copiar",
     couponCopied: "¡Código {coupon} copiado! Úsalo en Etsy",
     catalogTitle: "Favoritos de la Semana",
     allCatalog: "Ver catálogo completo",
-    downloadBtn: "Descargar",
+    downloadBtn: "Ver",
     compatTitle: "¿Qué formato de archivo necesitas?",
     compatDesc: "Nuestros moldes se adaptan a tu plotter de corte. Elige tu máquina de corte para recibir consejos útiles:",
     faqTitle: "Preguntas Frecuentes",
@@ -39,8 +49,9 @@ const TRANSLATIONS = {
   en: {
     tagline1: "Clean Templates & 3D Shakers ready to cut (SVG & Studio)",
     tagline2: "Digital Papers & High-Resolution Custom Designs",
-    headerSub: "🎨 3D Cake Toppers • ✂️ SVG Box Templates",
-    bio: "Unique digital designs and shakers for your best celebrations. Ready to download and assemble!",
+    headerSub: "🎨 CUSTOM PARTY DECOR FOR PARTIES 🎈",
+    bio: "🎁 Easy-to-assemble template designs",
+    bio2: "✨ Celebrate in style with our unique products designed for your special occasions ✨",
     tutorialTitle: "Don't know how to assemble the templates?",
     tutorialDesc: "Watch my quick assembly videos on TikTok",
     tutorialBtn: "Watch Reels",
@@ -53,7 +64,7 @@ const TRANSLATIONS = {
     couponCopied: "Code {coupon} copied! Use it on Etsy",
     catalogTitle: "Favorites of the Week",
     allCatalog: "See full catalog",
-    downloadBtn: "Download",
+    downloadBtn: "Look",
     compatTitle: "Which file format do you need?",
     compatDesc: "Our templates adapt to your cutting machine. Select your machine to see helpful tips:",
     faqTitle: "Frequently Asked Questions",
@@ -131,12 +142,14 @@ const Icons = {
 };
 
 export default function App() {
-  const [lang, setLang] = useState('es'); // 'es' or 'en'
+  const [lang, setLang] = useState('es'); 
   const [activeShop, setActiveShop] = useState('shop1'); 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [faqOpen, setFaqOpen] = useState({});
   const [selectedMachine, setSelectedMachine] = useState('');
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const t = (key) => TRANSLATIONS[lang][key] || key;
 
@@ -187,7 +200,7 @@ export default function App() {
   };
 
   const shop2Data = {
-    name: "JudithDesigns",
+    name: "JudithDesignsArt",
     tagline: t('tagline2'),
     coupon: "JUDITHART15",
     discount: "15% OFF",
@@ -276,31 +289,31 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-pink-300 selection:text-slate-900 pb-10">
+    <div className="min-h-screen bg-[#FCDCE7] text-slate-800 font-sans antialiased selection:bg-pink-300 selection:text-slate-900 pb-10">
       
       {/* TOAST DE NOTIFICACIÓN GLOBAL */}
       {showToast && (
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-pink-500 border border-pink-400 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-bounce max-w-[90%] text-center">
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#F42B88] border border-pink-400 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-bounce max-w-[90%] text-center">
           <Icons.Check className="w-5 h-5 shrink-0" />
           <span className="text-sm font-semibold">{toastMessage}</span>
         </div>
       )}
 
-      {/* CONTENEDOR BIO-LINK MOBILE-FIRST CON DISEÑO DETALLADO */}
-      <div className="max-w-md mx-auto bg-white min-h-screen shadow-2xl relative flex flex-col justify-between border-x border-pink-100">
+      {/* CONTENEDOR BIO-LINK MOBILE-FIRST SIN FONDO BLANCO */}
+      <div className="max-w-md mx-auto bg-[#FCDCE7] min-h-screen shadow-2xl relative flex flex-col justify-between border-x border-[#F42B88]/10">
         
         <div className="p-4 sm:p-6 space-y-6">
           
           {/* BARRA DE ACCIONES SUPERIOR: CAMBIO DE IDIOMA */}
           <div className="flex justify-end items-center pt-2">
-            <div className="bg-pink-50 p-1 rounded-full border border-pink-100 flex items-center space-x-1 shadow-sm">
+            <div className="bg-white/80 backdrop-blur p-1 rounded-full border border-pink-100 flex items-center space-x-1 shadow-sm">
               <button
                 onClick={() => {
                   setLang('es');
                   copyToClipboard('', 'Idioma cambiado a Español');
                 }}
                 className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${
-                  lang === 'es' ? 'bg-pink-500 text-white shadow-sm' : 'text-slate-500 hover:text-pink-500'
+                  lang === 'es' ? 'bg-[#F42B88] text-white shadow-sm' : 'text-[#7A4A87] hover:text-[#F42B88]'
                 }`}
               >
                 ESP
@@ -311,7 +324,7 @@ export default function App() {
                   copyToClipboard('', 'Language changed to English');
                 }}
                 className={`px-3 py-1 text-[10px] font-bold rounded-full transition-all ${
-                  lang === 'en' ? 'bg-pink-500 text-white shadow-sm' : 'text-slate-500 hover:text-pink-500'
+                  lang === 'en' ? 'bg-[#F42B88] text-white shadow-sm' : 'text-[#7A4A87] hover:text-[#F42B88]'
                 }`}
               >
                 ENG
@@ -319,61 +332,73 @@ export default function App() {
             </div>
           </div>
 
-          {/* CABECERA ESTILO PASTEL CON LOGO VECTORIAL PREMIUM (JD) */}
+          {/* CABECERA CON LOGOTIPO ADAPTATIVO "AS IS" (SIN RECORTES) */}
           <header className="text-center pt-2 pb-2 space-y-4">
-            <div className="relative inline-block">
-              {/* Contenedor del Avatar Realizado con Efecto de Capas de Papel Superpuestas */}
-              <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-pink-300 via-purple-300 to-sky-300 p-1.5 shadow-md mx-auto">
-                <div className="w-full h-full rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex flex-col items-center justify-center relative overflow-hidden border border-pink-200">
-                  <span className="text-2xl font-serif font-black text-pink-500 tracking-tighter">JD</span>
-                  <Icons.Sparkles className="w-4 h-4 text-purple-400 absolute bottom-3" />
-                </div>
+            <div className="flex justify-center">
+              <div className="relative inline-block max-w-[150px] mx-auto">
+                {!imgError && (
+                  <img 
+                    src="Image JD.png" 
+                    alt="Judith Designs" 
+                    className={`w-full h-auto rounded-2xl shadow-sm transition-opacity duration-300 ${
+                      imgLoaded ? 'opacity-100' : 'opacity-0 absolute'
+                    }`}
+                    onLoad={() => setImgLoaded(true)}
+                    onError={() => setImgError(true)}
+                  />
+                )}
+                {(!imgLoaded || imgError) && (
+                  <div className="w-28 h-28 rounded-2xl bg-white flex flex-col items-center justify-center relative border border-pink-200 shadow-sm">
+                    <span className="text-2xl font-serif font-black text-[#F42B88] tracking-tighter">JD</span>
+                    <Icons.Sparkles className="w-4 h-4 text-[#7A4A87] absolute bottom-3" />
+                  </div>
+                )}
               </div>
-              <span className="absolute bottom-1 right-2 bg-pink-400 text-white p-2 rounded-full shadow-lg">
-                <Icons.Scissors className="w-4 h-4" />
-              </span>
             </div>
 
+            {/* TEXTO EN FUCSIA VIBRANTE Y MORADO ELEGANTE */}
             <div className="space-y-1">
-              <h1 className="text-2xl font-serif font-bold text-slate-800 tracking-wide">Judith Designs</h1>
-              <p className="text-xs text-pink-500 font-bold tracking-wider uppercase flex items-center justify-center gap-1">
+              <p className="text-xs text-[#F42B88] font-bold tracking-wider uppercase flex items-center justify-center gap-1">
                 <span>{t('headerSub')}</span>
               </p>
-              <p className="text-[11px] text-slate-500 max-w-xs mx-auto leading-relaxed">
+              <p className="text-xs text-[#7A4A87] font-semibold max-w-xs mx-auto leading-relaxed">
                 {t('bio')}
+              </p>
+              <p className="text-xs text-[#7A4A87] font-medium max-w-xs mx-auto leading-relaxed mt-1 italic">
+                {t('bio2')}
               </p>
             </div>
 
-            {/* Enlaces directos a Redes Sociales */}
+            {/* BOTONES DE REDES SOCIALES CON FONDO BLANCO E ICONO MORADO */}
             <div className="flex justify-center gap-3 pt-1">
-              <a href="https://instagram.com/judithdesigns.art" target="_blank" rel="noreferrer" aria-label="Instagram de Judith" className="p-2.5 bg-pink-50 hover:bg-pink-100 rounded-full text-pink-500 transition-colors border border-pink-100 shadow-sm">
+              <a href="https://instagram.com/judithdesigns.art" target="_blank" rel="noreferrer" aria-label="Instagram de Judith" className="p-2.5 bg-white hover:bg-pink-100 rounded-full text-[#7A4A87] hover:text-[#F42B88] transition-colors border border-pink-200 shadow-sm">
                 <Icons.Instagram className="w-5 h-5" />
               </a>
-              <a href="https://tiktok.com/@judithdesigns.art" target="_blank" rel="noreferrer" aria-label="TikTok de Judith" className="p-2.5 bg-purple-50 hover:bg-purple-100 rounded-full text-purple-500 transition-colors border border-purple-100 shadow-sm">
+              <a href="https://tiktok.com/@judithdesigns.art" target="_blank" rel="noreferrer" aria-label="TikTok de Judith" className="p-2.5 bg-white hover:bg-purple-100 rounded-full text-[#7A4A87] hover:text-[#F42B88] transition-colors border border-purple-100 shadow-sm">
                 <Icons.TikTok className="w-5 h-5" />
               </a>
-              <a href="https://www.pinterest.com/JudithDesingsArts/?invite_code=fe67652a50ae40c29845f09396355dc7&sender=932456435256902320" target="_blank" rel="noreferrer" aria-label="Pinterest de Judith" className="p-2.5 bg-sky-50 hover:bg-sky-100 rounded-full text-sky-500 transition-colors border border-sky-100 shadow-sm">
+              <a href="https://www.pinterest.com/JudithDesingsArts/?invite_code=fe67652a50ae40c29845f09396355dc7&sender=932456435256902320" target="_blank" rel="noreferrer" aria-label="Pinterest de Judith" className="p-2.5 bg-white hover:bg-sky-100 rounded-full text-[#7A4A87] hover:text-[#F42B88] transition-colors border border-sky-100 shadow-sm">
                 <Icons.Pinterest className="w-5 h-5" />
               </a>
             </div>
           </header>
 
-          {/* SECCIÓN VIDEOTUTORIALES DE ARMADO */}
-          <section className="bg-gradient-to-r from-pink-100 via-purple-100 to-sky-100 p-3.5 rounded-2xl border border-pink-200/50 flex items-center justify-between shadow-sm">
+          {/* SECCIÓN VIDEOTUTORIALES DE ARMADO (FONDO LILA A ROSA PASTEL) */}
+          <section className="bg-gradient-to-r from-purple-50/60 to-[#FCDCE7] p-3.5 rounded-2xl border border-pink-200/50 flex items-center justify-between shadow-sm">
             <div className="flex items-center gap-3">
-              <span className="p-2.5 bg-white rounded-xl text-pink-500 shadow-sm animate-pulse shrink-0">
+              <span className="p-2.5 bg-white rounded-xl text-[#F42B88] shadow-sm animate-pulse shrink-0">
                 <Icons.Play className="w-4 h-4" />
               </span>
               <div className="text-left">
                 <h3 className="text-xs font-bold text-slate-800">{t('tutorialTitle')}</h3>
-                <p className="text-[10px] text-slate-500 font-medium">{t('tutorialDesc')}</p>
+                <p className="text-[10px] text-[#7A4A87] font-semibold">{t('tutorialDesc')}</p>
               </div>
             </div>
             <a 
               href="https://tiktok.com/@judithdesigns.art" 
               target="_blank" 
               rel="noreferrer" 
-              className="bg-white hover:bg-pink-500 text-pink-500 hover:text-white px-3.5 py-1.5 rounded-lg text-[10px] font-bold shadow-sm transition-all border border-pink-200 shrink-0"
+              className="bg-white hover:bg-[#F42B88] text-[#F42B88] hover:text-white px-3.5 py-1.5 rounded-lg text-[10px] font-bold shadow-sm transition-all border border-pink-200 shrink-0"
             >
               {t('tutorialBtn')}
             </a>
@@ -381,14 +406,14 @@ export default function App() {
 
           {/* TABS DE LAS DOS TIENDAS DE ETSY */}
           <section className="space-y-3">
-            <span className="block text-[10px] uppercase font-bold text-slate-400 tracking-widest text-center">{t('selectShop')}</span>
-            <div className="bg-slate-100 p-1 rounded-2xl flex border border-slate-200">
+            <span className="block text-[10px] uppercase font-bold text-[#7A4A87] tracking-widest text-center">{t('selectShop')}</span>
+            <div className="bg-white/80 p-1 rounded-2xl flex border border-pink-100">
               <button
                 onClick={() => setActiveShop('shop1')}
                 className={`flex-1 py-3 text-center rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                   activeShop === 'shop1'
-                    ? 'bg-white text-pink-600 shadow-md transform scale-[1.01] border border-pink-100'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white text-[#F42B88] shadow-md transform scale-[1.01] border border-pink-100'
+                    : 'text-[#7A4A87] hover:text-slate-800'
                 }`}
               >
                 {t('tabShop1')}
@@ -397,8 +422,8 @@ export default function App() {
                 onClick={() => setActiveShop('shop2')}
                 className={`flex-1 py-3 text-center rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                   activeShop === 'shop2'
-                    ? 'bg-white text-purple-600 shadow-md transform scale-[1.01] border border-purple-100'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white text-[#7A4A87] shadow-md transform scale-[1.01] border border-pink-100'
+                    : 'text-[#7A4A87] hover:text-slate-800'
                 }`}
               >
                 {t('tabShop2')}
@@ -407,20 +432,20 @@ export default function App() {
           </section>
 
           {/* DETALLES DE LA TIENDA SELECCIONADA */}
-          <section className="text-center bg-slate-50 p-4 rounded-2xl border border-pink-100/50">
-            <h2 className="text-md font-serif font-bold text-slate-800 flex items-center justify-center gap-2">
-              <Icons.Sparkles className="w-4 h-4 text-pink-400" />
+          <section className="text-center bg-white/60 p-4 rounded-2xl border border-pink-100/50">
+            <h2 className="text-md font-serif font-bold text-[#7A4A87] flex items-center justify-center gap-2">
+              <Icons.Sparkles className="w-4 h-4 text-[#F42B88]" />
               {activeShopData.name}
             </h2>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-xs text-[#7A4A87] mt-1 leading-relaxed">
               {activeShopData.tagline}
             </p>
           </section>
 
           {/* CONTAINER DEL CUPÓN COPIABLE */}
-          <section className="bg-gradient-to-r from-pink-50 to-white p-4 rounded-2xl border border-pink-100 flex items-center justify-between shadow-sm">
+          <section className="bg-white/80 p-4 rounded-2xl border border-pink-100 flex items-center justify-between shadow-sm">
             <div className="space-y-0.5">
-              <span className="text-[9px] font-bold text-pink-500 uppercase tracking-widest">{t('couponTitle')}</span>
+              <span className="text-[9px] font-bold text-[#F42B88] uppercase tracking-widest">{t('couponTitle')}</span>
               <p className="text-xs font-bold text-slate-700">{t('couponOffer').replace('{discount}', activeShopData.discount)}</p>
             </div>
             <button
@@ -428,7 +453,7 @@ export default function App() {
                 activeShopData.coupon, 
                 t('couponCopied').replace('{coupon}', activeShopData.coupon)
               )}
-              className="px-3.5 py-1.5 bg-pink-500 hover:bg-pink-600 active:bg-pink-700 text-white text-xs font-bold rounded-lg transition-transform hover:scale-105 active:scale-95 flex items-center gap-1 shadow"
+              className="px-3.5 py-1.5 bg-[#F42B88] hover:bg-[#F42B88]/90 active:scale-95 text-white text-xs font-bold rounded-lg transition-transform flex items-center gap-1 shadow"
             >
               <span className="bg-white/20 px-1 rounded font-mono text-[10px]">{activeShopData.coupon}</span>
               <span>{t('couponCopy')}</span>
@@ -438,12 +463,12 @@ export default function App() {
           {/* LISTADO DE PRODUCTOS DESTACADOS */}
           <section className="space-y-4">
             <div className="flex justify-between items-center px-1">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">{t('catalogTitle')}</h3>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#7A4A87]">{t('catalogTitle')}</h3>
               <a
                 href={activeShopData.etsyUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs text-pink-500 hover:underline font-bold flex items-center gap-1"
+                className="text-xs text-[#F42B88] hover:underline font-bold flex items-center gap-1"
               >
                 {t('allCatalog')}
                 <Icons.Etsy className="w-3.5 h-3.5" />
@@ -452,9 +477,9 @@ export default function App() {
 
             <div className="space-y-4">
               {activeShopData.products.map((product) => (
-                <div key={product.id} className="bg-white border border-slate-100 rounded-2xl p-4 flex gap-4 transition-all hover:border-pink-200 hover:shadow-md group relative">
+                <div key={product.id} className="bg-white/80 border border-pink-100 rounded-2xl p-4 flex gap-4 transition-all hover:border-pink-300 hover:shadow-md group relative">
                   
-                  {/* Caja de previsualización con degradados suaves */}
+                  {/* Caja de previsualización */}
                   <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-gradient-to-br ${product.bgGradient} shrink-0 flex flex-col items-center justify-center relative overflow-hidden shadow-inner border border-slate-100`}>
                     <Icons.Sparkles className="w-8 h-8 text-white/50" />
                     <span className="absolute bottom-1 right-1 bg-white/80 backdrop-blur-sm text-[8px] px-1.5 py-0.5 rounded font-bold text-slate-700">
@@ -466,12 +491,12 @@ export default function App() {
                   <div className="flex-1 flex flex-col justify-between">
                     <div className="space-y-1">
                       <div className="flex items-center justify-between gap-1 flex-wrap">
-                        <span className="bg-pink-50 text-pink-600 text-[8px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                        <span className="bg-pink-50 text-[#F42B88] text-[8px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
                           {product.tag}
                         </span>
-                        <span className="text-xs font-extrabold text-slate-800">{product.price}</span>
+                        <span className="text-xs font-extrabold text-[#7A4A87]">{product.price}</span>
                       </div>
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-pink-500 transition-colors leading-tight">
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-[#F42B88] transition-colors leading-tight">
                         {product.title}
                       </h4>
                       <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
@@ -490,7 +515,7 @@ export default function App() {
                         href={activeShopData.etsyUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-1 bg-slate-50 hover:bg-pink-500 border border-slate-200 hover:border-pink-400 text-slate-700 hover:text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1"
+                        className="px-3 py-1 bg-white hover:bg-[#F42B88] border border-pink-200 hover:border-[#F42B88] text-slate-700 hover:text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1 shadow-sm"
                       >
                         {t('downloadBtn')}
                       </a>
@@ -502,19 +527,19 @@ export default function App() {
           </section>
 
           {/* DETECTOR DE COMPATIBILIDAD DE SOFTWARE */}
-          <section className="bg-pink-50/40 border border-pink-100 rounded-2xl p-4 space-y-3">
-            <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1">
-              <Icons.Scissors className="w-4 h-4 text-pink-500" />
+          <section className="bg-white/60 border border-pink-200 rounded-2xl p-4 space-y-3">
+            <h3 className="text-xs font-bold text-[#7A4A87] uppercase tracking-wider flex items-center gap-1">
+              <Icons.Scissors className="w-4 h-4 text-[#F42B88]" />
               {t('compatTitle')}
             </h3>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <p className="text-[11px] text-[#7A4A87] font-semibold leading-relaxed">
               {t('compatDesc')}
             </p>
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => setSelectedMachine('cricut')}
                 className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
-                  selectedMachine === 'cricut' ? 'bg-pink-500 text-white border-pink-500' : 'bg-white border-slate-200 text-slate-600'
+                  selectedMachine === 'cricut' ? 'bg-[#F42B88] text-white border-[#F42B88]' : 'bg-white border-pink-100 text-[#7A4A87]'
                 }`}
               >
                 Cricut
@@ -522,7 +547,7 @@ export default function App() {
               <button
                 onClick={() => setSelectedMachine('cameo_free')}
                 className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
-                  selectedMachine === 'cameo_free' ? 'bg-pink-500 text-white border-pink-500' : 'bg-white border-slate-200 text-slate-600'
+                  selectedMachine === 'cameo_free' ? 'bg-[#F42B88] text-white border-[#F42B88]' : 'bg-white border-pink-100 text-[#7A4A87]'
                 }`}
               >
                 Cameo (Studio Basic)
@@ -530,7 +555,7 @@ export default function App() {
               <button
                 onClick={() => setSelectedMachine('cameo_pro')}
                 className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
-                  selectedMachine === 'cameo_pro' ? 'bg-pink-500 text-white border-pink-500' : 'bg-white border-slate-200 text-slate-600'
+                  selectedMachine === 'cameo_pro' ? 'bg-[#F42B88] text-white border-[#F42B88]' : 'bg-white border-pink-100 text-[#7A4A87]'
                 }`}
               >
                 Cameo Designer/Biz
@@ -538,20 +563,33 @@ export default function App() {
               <button
                 onClick={() => setSelectedMachine('scanncut')}
                 className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
-                  selectedMachine === 'scanncut' ? 'bg-pink-500 text-white border-pink-500' : 'bg-white border-slate-200 text-slate-600'
+                  selectedMachine === 'scanncut' ? 'bg-[#F42B88] text-white border-[#F42B88]' : 'bg-white border-pink-100 text-[#7A4A87]'
                 }`}
               >
                 ScanNCut
               </button>
             </div>
-            <div className="p-3 bg-white rounded-xl border border-pink-100/60 text-[11px] text-slate-600 font-medium">
+            <div className="p-3 bg-white/80 rounded-xl border border-pink-100 text-[11px] text-[#7A4A87] font-semibold">
               {getCompatibilityMessage()}
             </div>
           </section>
 
+          {/* BOTÓN CTA MAESTRO PARA VISITAR TIENDA DE ETSY DIRECTAMENTE */}
+          <section className="pt-2">
+            <a
+              href={activeShopData.etsyUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full bg-[#F42B88] hover:bg-[#F42B88]/90 text-white font-extrabold text-xs py-4 rounded-2xl shadow-lg shadow-pink-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase tracking-wider"
+            >
+              <Icons.Etsy className="w-4 h-4" />
+              {lang === 'es' ? 'Visitar Tienda Oficial en Etsy' : 'Visit Official Etsy Shop'}
+            </a>
+          </section>
+
           {/* SECCIÓN PREGUNTAS FRECUENTES (FAQs) */}
           <section className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 px-1">{t('faqTitle')}</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#7A4A87] px-1">{t('faqTitle')}</h3>
             <div className="space-y-2">
               {[
                 {
@@ -576,16 +614,16 @@ export default function App() {
                 const question = lang === 'es' ? faq.q_es : faq.q_en;
                 const answer = lang === 'es' ? faq.a_es : faq.a_en;
                 return (
-                  <div key={index} className="border border-slate-100 rounded-xl overflow-hidden bg-slate-50/50">
+                  <div key={index} className="border border-pink-100 rounded-xl overflow-hidden bg-white/40">
                     <button
                       onClick={() => toggleFaq(index)}
-                      className="w-full p-3 text-left flex justify-between items-center text-xs font-bold text-slate-700 hover:text-pink-500 transition-colors focus:outline-none"
+                      className="w-full p-3 text-left flex justify-between items-center text-xs font-bold text-slate-700 hover:text-[#F42B88] transition-colors focus:outline-none"
                     >
                       <span>{question}</span>
                       <Icons.ChevronDown className={`w-4 h-4 transition-transform duration-200 ${faqOpen[index] ? 'rotate-180' : ''}`} />
                     </button>
                     {faqOpen[index] && (
-                      <div className="p-3 pt-0 text-xs text-slate-500 leading-relaxed border-t border-slate-100/60 bg-white animate-slideDown">
+                      <div className="p-3 pt-0 text-xs text-slate-500 leading-relaxed border-t border-pink-100 bg-white/80 animate-slideDown">
                         {answer}
                       </div>
                     )}
@@ -598,18 +636,18 @@ export default function App() {
         </div>
 
         {/* PIE DE PÁGINA */}
-        <footer className="border-t border-slate-100 bg-slate-50 p-6 text-center space-y-3">
-          <p className="text-[10px] text-slate-400 leading-relaxed">
+        <footer className="border-t border-pink-100 bg-white/20 p-6 text-center space-y-3">
+          <p className="text-[10px] text-[#7A4A87] leading-relaxed">
             {t('footerText')}
           </p>
-          <div className="flex justify-center gap-4 text-[10px] font-bold text-slate-500">
-            <a href="#terminos" className="hover:text-pink-500">{lang === 'es' ? 'Términos' : 'Terms'}</a>
+          <div className="flex justify-center gap-4 text-[10px] font-bold text-[#7A4A87]">
+            <a href="#terminos" className="hover:text-[#F42B88]">{lang === 'es' ? 'Términos' : 'Terms'}</a>
             <span>•</span>
-            <a href="#privacidad" className="hover:text-pink-500">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a>
+            <a href="#privacidad" className="hover:text-[#F42B88]">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a>
             <span>•</span>
             <button
               onClick={() => copyToClipboard(window.location.href, t('shareCopied'))}
-              className="hover:text-pink-500 flex items-center gap-1"
+              className="hover:text-[#F42B88] flex items-center gap-1"
             >
               {t('shareProfile')}
             </button>
