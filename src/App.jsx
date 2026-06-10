@@ -1,12 +1,15 @@
 // =========================================================
-// Judith Designs Bio Link - v2.8.0 - Dynamic Product Images
+// Judith Designs Bio Link - v2.9.2 - Plotters Simplified
 // Optimized for Instagram/TikTok mobile viewports in 2026.
 // Keeps selected Option 3 Cushion style for Logo.
+// Removed Coupon code section & toast notification for a cleaner UI.
+// Removed Cameo (Basic) option and renamed Cameo (Designer) to simply "Cameo".
+// Reorganized the grid to 2 balanced columns (Cricut and Cameo).
 // Implements an intelligent image-loading fallback decision system 
-// for the "Favorites of the week" cards.
+// for the "Favorites of the week" cards with conditional digital badge.
 // =========================================================
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // --- ENLACES OFICIALES ---
 const SOCIAL_LINKS = {
@@ -21,27 +24,22 @@ const SOCIAL_LINKS = {
 // --- DICCIONARIO BILINGÜE COMPLETO ---
 const TRANSLATIONS = {
   es: {
-    headerSub: "🎨 DECORACIÓN PERSONALIZADA PARA FIESTAS 🎈",
-    headerLine1: "🎁 Diseños de plantilla fáciles de ensamblar",
-    headerLine2: "✨ Celebra con estilo con nuestros productos únicos para tus celebraciones ✨",
+    headerSub: "✨ Diseños de papelería creativa para llenar de magia tus momentos especiales. ✨",
     selectStoreTitle: "SELECCIONA UNA DE MIS TIENDAS EN ETSY",
     templatesTitle: "Plantillas en Blanco",
     decorTitle: "Decoración personalizada para fiestas",
     
     // Tienda 1: Blank Templates
     shop1Name: "JudithDesignsArtShop",
-    shop1Desc: "Moldes Limpios y Shakers 3D listos para cortar (SVG & Studio)",
+    shop1Desc: "Plantillas en Blanco (SVG & Studio)",
     
     // Tienda 2: Custom Decor
     shop2Name: "JudithDesignsArt",
-    shop2Desc: "Papeles Digitales y Diseños Personalizados de Alta Resolución",
+    shop2Desc: "Celebra con estilo",
 
     howToBuild: "¿No sabes cómo armar los moldes?",
     howToBuildSub: "Mira mis videos rápidos de armado en TikTok",
     viewReels: "Ver Reels",
-    couponTitle: "🎁 Cupón de Descuento Especial 🎁",
-    couponSubtitle: "¡Copia el código y úsalo en tu carrito de Etsy para obtener un 10% de descuento adicional!",
-    copiedMessage: "¡Código copiado al portapapeles! 💖",
     favoritesTitle: "⭐ Favoritos de la Semana ⭐",
     favoritesSubtitle: "Las plantillas digitales más vendidas de nuestro taller",
     viewProduct: "Ver en Etsy",
@@ -53,7 +51,7 @@ const TRANSLATIONS = {
     faqItems: [
       {
         q: "¿Qué formatos recibo al comprar un archivo?",
-        a: "Recibirás una carpeta ZIP descargable inmediatamente después del pago que incluye formatos SVG, PDF, PNG y DXF, perfectamente limpios para corte manual o digital."
+        a: "Recibiras tres archivos SVG (Cricut), Studio (Sillouette - Zip) e instrucciones básicas de configuración."
       },
       {
         q: "¿Los moldes incluyen instrucciones de armado?",
@@ -65,37 +63,30 @@ const TRANSLATIONS = {
       }
     ],
     plotterTips: {
-      cricut: "💡 ¡Usa archivos **.SVG**! Cricut Design Space los escala perfectamente de forma nativa. Agrupa tus líneas de score (marcado) y cámbialas de 'Cut' a 'Score' antes de procesar.",
-      cameobasic: "💡 Como usas la edición básica de Silhouette Studio (gratuita), debes usar archivos **.DXF**. Asegúrate de habilitar 'Autocentrante' en la configuración para que el molde se alinee.",
-      cameopro: "💡 ¡Soporte completo para **.SVG**! Abre el archivo directamente en Silhouette Studio. Conserva capas, tamaños reales y líneas de marcado precisas sin configuraciones extra.",
-      scanncut: "💡 Brother ScanNCut requiere formatos **.FCM** o **.SVG**. Te recomendamos cargar el archivo .SVG en Brother CanvasWorkspace (web o desktop) para transferirlo por Wifi de forma limpia."
+      cricut: "💡 ¡Usa archivos **.SVG**! Cricut Design Space que se descarga directamente desde el programa. Agrupa tus líneas de score (marcado) y cámbialas de 'Cut' a 'Score' antes de procesar.",
+      cameo: "💡 ¡Soporte completo para **.Studio**! Abre el archivo directamente en Silhouette Studio. Conserva capas, tamaños reales y líneas de marcado precisas sin configuraciones extra."
     },
     footerCredits: "Diseñado con amor por Judith Designs © 2026"
   },
   en: {
-    headerSub: "🎨 CUSTOM PARTY DECORATIONS 🎈",
-    headerLine1: "🎁 Easy-to-assemble design templates",
-    headerLine2: "✨ Celebrate in style with our unique products for your celebrations ✨",
+    headerSub: "✨ Creative stationery designs to bring magic to your special moments. ✨",
     selectStoreTitle: "SELECT ONE OF MY ETSY SHOPS",
     templatesTitle: "Blank Templates",
     decorTitle: "Custom Party Decor",
     
     // Shop 1: Blank Templates
     shop1Name: "JudithDesignsArtShop",
-    shop1Desc: "Clean templates and 3D Shakers ready to cut (SVG & Studio)",
+    shop1Desc: "Blank Templates (SVG & Studio)",
     
     // Shop 2: Custom Decor
     shop2Name: "JudithDesignsArt",
-    shop2Desc: "Digital Papers & High Resolution Custom Designs",
+    shop2Desc: "Celebrate in Style",
 
     howToBuild: "Don't know how to assemble the templates?",
     howToBuildSub: "Watch my quick tutorial videos on TikTok",
     viewReels: "Watch Reels",
-    couponTitle: "🎁 Special Discount Coupon 🎁",
-    couponSubtitle: "Copy this code and use it on your Etsy cart for an extra 10% discount!",
-    copiedMessage: "Code copied to clipboard! 💖",
     favoritesTitle: "⭐ Weekly Favorites ⭐",
-    favoritesSubtitle: "The top-selling digital patterns from our creative workshop",
+    favoritesSubtitle: "",
     viewProduct: "View on Etsy",
     digitalBadge: "DIGITAL",
     plotterTitle: "Which file format do you need?",
@@ -105,7 +96,7 @@ const TRANSLATIONS = {
     faqItems: [
       {
         q: "What file formats do I receive upon purchase?",
-        a: "You will receive an instant downloadable ZIP folder containing SVG, PDF, PNG, and DXF files, completely optimized for manual or digital cutting."
+        a: "You will receive three SVG files (Cricut), Studio (Sillouette - Zip) and basic setup instructions."
       },
       {
         q: "Do the templates include assembly guides?",
@@ -117,18 +108,14 @@ const TRANSLATIONS = {
       }
     ],
     plotterTips: {
-      cricut: "💡 Use **.SVG** files! Cricut Design Space scales them perfectly natively. Group your score lines and change them from 'Cut' to 'Score' before processing your mat.",
-      cameobasic: "💡 Since you are using Silhouette Studio Basic Edition (free), you must import **.DXF** files. Make sure 'Auto-Center' is enabled in settings for perfect alignment.",
-      cameopro: "💡 Full **.SVG** support! Open the file directly in Silhouette Studio Designer/Business. It preserves layer hierarchy, real sizes, and score lines flawlessly.",
-      scanncut: "💡 Brother ScanNCut requires **.FCM** or **.SVG** formats. We suggest uploading the .SVG file to Brother CanvasWorkspace to transfer it cleanly via Wifi."
+      cricut: "💡 Use **.SVG** files! Cricut Design Space, which is downloaded directly from the program. Group your score lines and change them from 'Cut' to 'Score' before processing your mat.",
+      cameo: "💡 Full **.SVG** support! Open the file directly in Silhouette Studio Designer/Business. It preserves layer hierarchy, real sizes, and score lines flawlessly."
     },
     footerCredits: "Designed with love by Judith Designs © 2026"
   }
 };
 
 // --- MOCK PRODUCTOS DESTACADOS: TIENDA 1 (BLANK TEMPLATES) ---
-// Puedes agregar nombres de imágenes en la propiedad 'image'. Si el archivo existe en 'public', se cargará.
-// Si lo dejas como "" (vacío), cargará automáticamente el diseño "blank" de degradado y emoji.
 const FAVORITES_BLANK_SHOP = [
   {
     id: 1,
@@ -140,7 +127,7 @@ const FAVORITES_BLANK_SHOP = [
     rating: 5,
     gradient: "from-pink-400 to-indigo-300",
     emoji: "🌸",
-    image: "Plantilla Nutella.jpg", // Nombre del archivo en la carpeta public
+    image: "Plantilla Nutella.jpg",
     link: "http://bit.ly/4fs1YXm"
   },
   {
@@ -153,7 +140,7 @@ const FAVORITES_BLANK_SHOP = [
     rating: 5,
     gradient: "from-rose-300 to-purple-400",
     emoji: "🎁",
-    image: "Plantilla Kinder.jpg", // Si no existe en la carpeta public, se convertirá automáticamente en blank
+    image: "Plantilla Kinder.jpg",
     link: "https://shorturl.at/E7Mim"
   },
   {
@@ -166,7 +153,7 @@ const FAVORITES_BLANK_SHOP = [
     rating: 5,
     gradient: "from-fuchsia-400 to-amber-200",
     emoji: "🌈",
-    image: "Plantilla Activity Box.jpg", // Vacío para forzar estilo blank de inmediato
+    image: "Plantilla Activity Box.jpg",
     link: "https://shorturl.at/xBWhD"
   }
 ];
@@ -219,7 +206,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('blank'); // 'blank' o 'custom'
   const [selectedPlotter, setSelectedPlotter] = useState('cricut');
   const [openFaq, setOpenFaq] = useState(null);
-  const [showToast, setShowToast] = useState(false);
   const [imgError, setImgError] = useState(false);
   
   // Registro de errores para las imágenes de productos individuales
@@ -237,27 +223,6 @@ export default function App() {
       [prodId]: true
     }));
   };
-
-  // Acción para copiar cupón
-  const handleCopyCoupon = () => {
-    const input = document.createElement('input');
-    input.setAttribute('value', 'JUDITHDIY10');
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand('copy');
-    document.body.removeChild(input);
-
-    setShowToast(true);
-  };
-
-  useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => {
-        setShowToast(false);
-      }, 2500);
-      return () => clearTimeout(timer);
-    }
-  }, [showToast]);
 
   return (
     <div className="min-h-screen w-full relative overflow-x-hidden bg-[#FCDCE7] font-sans text-[#7A4A87] selection:bg-[#F42B88] selection:text-white pb-12">
@@ -305,7 +270,7 @@ export default function App() {
             <div className="w-28 h-28 bg-[#FCDCE7] rounded-3xl p-1.5 ring-2 ring-white ring-offset-2 ring-offset-[#FCDCE7] shadow-md flex items-center justify-center overflow-hidden">
               {!imgError ? (
                 <img 
-                  src="Image JD.png" 
+                  src="foto perfil ETSY .png" 
                   alt="Judith Designs Logo" 
                   className="w-full h-full object-contain rounded-2xl"
                   onError={() => setImgError(true)}
@@ -323,14 +288,8 @@ export default function App() {
             <h2 className="text-xs font-bold tracking-wide text-[#F42B88] uppercase">
               {t('headerSub')}
             </h2>
-            <p className="text-[11px] font-bold text-[#7A4A87]">
-              {t('headerLine1')}
-            </p>
-            <p className="text-[10px] italic text-[#7A4A87] leading-relaxed max-w-[280px] mx-auto">
-              {t('headerLine2')}
-            </p>
           </div>
-        </header>
+        </header> 
 
         {/* REDES SOCIALES ULTRA-DINÁMICAS E INTERACTIVAS */}
         <div className="flex justify-center items-center gap-5 mb-8">
@@ -414,7 +373,7 @@ export default function App() {
                     : 'bg-transparent border-transparent text-[#7A4A87] hover:bg-white/40'
                 }`}
               >
-                <span>✂️</span> {t('templatesTitle')}
+                <span>📐</span> {t('templatesTitle')}
               </button>
 
               <button
@@ -425,7 +384,7 @@ export default function App() {
                     : 'bg-transparent border-transparent text-[#7A4A87] hover:bg-white/40'
                 }`}
               >
-                <span>🎨</span> {t('decorTitle')}
+                <span>🎁</span> {t('decorTitle')}
               </button>
             </div>
 
@@ -454,25 +413,7 @@ export default function App() {
             </a>
           </div>
 
-          {/* SECCIÓN INTERACTIVA DE CUPÓN CON COPIADO EN PORTAPAPELES */}
-          <div className="p-4 bg-gradient-to-br from-pink-50/40 to-purple-50/40 rounded-2xl border border-pink-100 text-center relative">
-            <h4 className="text-[10px] font-black uppercase tracking-wider text-[#F42B88] mb-1 flex items-center justify-center gap-1">
-              {t('couponTitle')}
-            </h4>
-            <p className="text-[9px] text-[#7A4A87]/90 leading-relaxed mb-3">
-              {t('couponSubtitle')}
-            </p>
-            <button
-              onClick={handleCopyCoupon}
-              className="w-full py-2.5 bg-white border-2 border-dashed border-[#F42B88] hover:border-[#7A4A87] text-[#F42B88] hover:text-[#7A4A87] rounded-xl font-mono text-xs font-extrabold tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-sm"
-            >
-              <span>🎟️</span>
-              <span className="bg-pink-100/60 px-2 py-0.5 rounded text-[11px]">JUDITHDIY10</span>
-              <span className="text-[10px] font-sans opacity-75">(10% OFF)</span>
-            </button>
-          </div>
-
-          {/* INTERACTIVE SELECTOR FOR PLOTTERS */}
+          {/* INTERACTIVE SELECTOR FOR PLOTTERS - GRID OPTIMIZADO A 2 COLUMNAS */}
           <div className="bg-white border border-[#FCDCE7] rounded-2xl p-4 space-y-3.5">
             <div>
               <h4 className="text-[11px] font-black uppercase tracking-widest text-[#F42B88] mb-1">
@@ -486,9 +427,7 @@ export default function App() {
             <div className="grid grid-cols-2 gap-2">
               {[
                 { id: 'cricut', name: 'Cricut' },
-                { id: 'cameobasic', name: 'Cameo (Basic)' },
-                { id: 'cameopro', name: 'Cameo (Designer)' },
-                { id: 'scanncut', name: 'ScanNCut' }
+                { id: 'cameo', name: 'Cameo' }
               ].map((plotter) => (
                 <button
                   key={plotter.id}
@@ -520,9 +459,6 @@ export default function App() {
               <h4 className="text-[11px] font-black uppercase tracking-widest text-[#F42B88]">
                 {t('favoritesTitle')}
               </h4>
-              <p className="text-[9px] text-[#7A4A87] opacity-80">
-                {t('favoritesSubtitle')}
-              </p>
             </div>
 
             <div className="space-y-3">
@@ -553,12 +489,12 @@ export default function App() {
                         <span>{prod.emoji}</span>
                       )}
                       
-                    {/* Insignia Digital Flotante */}
+                      {/* Insignia Digital Flotante (Solo para la pestaña de Plantillas en Blanco) */}
                       {activeTab === 'blank' && (
-                      <span className="absolute top-1 left-1 bg-white/95 text-[7px] px-1 font-black rounded text-[#F42B88] uppercase shadow-sm tracking-wide">
-                        {t('digitalBadge')}
-                      </span>
-                    )}
+                        <span className="absolute top-1 left-1 bg-white/95 text-[7px] px-1 font-black rounded text-[#F42B88] uppercase shadow-sm tracking-wide">
+                          {t('digitalBadge')}
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex-1 ml-3 min-w-0">
@@ -643,14 +579,6 @@ export default function App() {
           </div>
 
         </div>
-
-        {/* NOTIFICACIÓN TOAST INTELIGENTE */}
-        {showToast && (
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-[#7A4A87] text-white px-5 py-2.5 rounded-full text-[10px] font-bold tracking-wider shadow-lg flex items-center gap-2 border border-pink-400 animate-slideUp">
-            <span>💖</span>
-            {t('copiedMessage')}
-          </div>
-        )}
 
         {/* FOOTER GENERAL */}
         <footer className="text-center py-4 text-[9px] text-[#7A4A87]/60 font-semibold uppercase tracking-wider">
